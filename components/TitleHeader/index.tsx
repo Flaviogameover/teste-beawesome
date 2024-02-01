@@ -17,7 +17,7 @@ export const TitleHeader = ({
 
 
 	return (
-		<div className="flex justify-between items-center text-muted-foreground">
+		<div className="flex my-5 justify-between items-center text-muted-foreground">
 			<div className="w-96 flex flex-col gap-5 border-b border-muted-foreground">
 				<h2 className="font-bold text-2xl">{label}</h2>
 				<p className="text-sm">{description}</p>
