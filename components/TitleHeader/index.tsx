@@ -23,7 +23,7 @@ export const TitleHeader = ({
 				<p className="text-sm">{description}</p>
 			</div>
 			{action && (
-				<Button onClick={action} variant={'ghost'}>
+				<Button onClick={()=>action()} variant={'ghost'}>
 					<PlusCircle />
 				</Button>
 			)}
