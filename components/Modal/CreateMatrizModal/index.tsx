@@ -1,33 +1,180 @@
 'use client';
+import { Modal } from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import {
-	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog';
-import { Modal } from '@/components/Modal';
+import { Input } from '@/components/ui/input';
 import { useCreateModal } from '@/hooks/useCreateModalStore';
+import { cn } from '@/lib/utils';
+import { ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+enum STEPS {
+	INITIAL = 0,
+	MATRIZ = 1,
+}
 
 export const CreateMatrizModal = () => {
+	const [lines, setLines] = useState(0);
 	const isOpen = useCreateModal((state) => state.isOpen);
 	const onClose = useCreateModal((state) => state.onClose);
+	const [page, setPage] = useState(STEPS.INITIAL);
+	const [matriz, setMatriz] = useState<number[][]>([]);
+
+    useEffect(()=>{
+        if(lines > 10) setLines(10);
+        if(lines < 1) setLines(1);
+    },[page,lines])
+
+	const handleClose = () => {
+		onClose();
+		setPage(STEPS.INITIAL);
+		setLines(0);
+	};
+
+	const generateMatrix = (n: number) => {
+		return Array.from({ length: n }, (_, i) => i + 1);
+	};
+
+	const handleAddInput = (row: number, pos: number, value: number) => {
+		setMatriz((prevInputs) => {
+			// Criar uma cópia do array original
+			const newInputs = prevInputs.map((_) => [...(_ || [])]);
+
+			// Preencher com arrays de tamanho fixo
+			if (!newInputs[row]) {
+				newInputs[row] = Array(generateMatrix(lines)[row]);
+			}
+
+			// Adicionar o valor à posição específica na linha
+			newInputs[row][pos - 1] = value;
+
+			return newInputs;
+		});
+	};
+
+    const handleCreate = () => {
+        //Todo: Criar funcao para adicionar no banco de dados apos filtragem
+    }
+
+	const HEADER = () => {
+		switch (page) {
+			case 0:
+				return <DialogTitle>Criar Matriz</DialogTitle>;
+
+			case 1:
+				return (
+					<div className="flex items-center gap-5">
+						<ArrowLeft
+							cursor={'pointer'}
+							size={25}
+							onClick={() => setPage(() => STEPS.INITIAL)}
+						/>
+						<DialogTitle>Criar Matriz</DialogTitle>
+					</div>
+				);
+			default:
+				return <DialogTitle>Criar Matriz</DialogTitle>;
+		}
+	};
+
+	const BODY = () => {
+		switch (page) {
+			case 0:
+				return (
+					<div className="border-b border-muted-foreground/50 pb-5 flex items-center gap-5">
+						<Input
+							type="number"
+							onChange={(e) => setLines(Number(e.target.value))}
+							value={lines}
+						/>
+						<Button
+							disabled={lines < 1}
+							type="button"
+							onClick={() => setPage(() => STEPS.MATRIZ)}
+						>
+							Adicionar linhas
+						</Button>
+					</div>
+				);
+			case 1:
+				const sequence = generateMatrix(lines);
+				return (
+					<div className="flex flex-col justify-center items-center gap-5">
+						{sequence.map((numberOfInputs, rowIndex) => (
+							<div key={rowIndex} className="flex gap-5">
+								{generateMatrix(numberOfInputs).map(
+									(pos, index) => (
+										<Input
+											className="border text-center border-muted-foreground w-14 h-14"
+											key={index}
+											type="number"
+											onChange={(e) =>
+												handleAddInput(
+													rowIndex,
+													pos,
+													Number(e.target.value)
+												)
+											}
+										/>
+									)
+								)}
+							</div>
+						))}
+					</div>
+				);
+
+			default:
+				return (
+					<div className="border-b border-muted-foreground/50 pb-5 flex items-center gap-5">
+						<Input
+							type="number"
+							onChange={(e) => setLines(Number(e.target.value))}
+							value={lines}
+						/>
+						<Button
+							disabled={lines < 1 || lines > 10}
+							type="button"
+							onClick={() => setPage(() => STEPS.MATRIZ)}
+						>
+							Adicionar linhas
+						</Button>
+					</div>
+				);
+		}
+	};
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
-			<DialogContent className="sm:max-w-[425px]">
+		<Modal isOpen={isOpen} onClose={handleClose}>
+			<DialogContent
+				className={cn(
+					'w-full',
+					page !== STEPS.INITIAL ? 'max-w-[95%]' : 'max-w-lg'
+				)}
+			>
 				<DialogHeader>
-					<DialogTitle>Edit profile</DialogTitle>
+					{HEADER()}
 					<DialogDescription>
-						Make changes to your profile here.
+						Digite a quantidade de linhas que sua matriz possui, em
+						seguida preencha e confirme os dados inseridos.
 					</DialogDescription>
 				</DialogHeader>
-				<div>Opa</div>
-				<DialogFooter>
-					<Button type="submit">Save changes</Button>
-				</DialogFooter>
+				{BODY()}
+				{page !== STEPS.INITIAL && (
+					<DialogFooter>
+						<Button
+							type="button"
+							onClick={handleCreate}
+                            disabled={matriz.length === 0}
+						>
+							Save changes
+						</Button>
+					</DialogFooter>
+				)}
 			</DialogContent>
 		</Modal>
 	);
