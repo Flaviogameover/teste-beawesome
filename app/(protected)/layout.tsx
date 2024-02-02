@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ModalProvider } from '@/providers/modalProvider';
+import { UserButton } from '@clerk/nextjs';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
@@ -7,10 +8,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 			<ModalProvider />
 
 			<div className="p-2 px-10 flex justify-between items-center bg-muted-foreground">
-				<h1>Home</h1>
-				<Button size={'sm'} variant={'ghost'}>
-					Sair
-				</Button>
+				<h1>TriMatriz Calc.</h1>
+
+				<div className="flex items-center gap-x-5">
+					<UserButton afterSignOutUrl="/" />
+
+					<Button size={'sm'} variant={'ghost'}>
+						Sair
+					</Button>
+				</div>
 			</div>
 			<div className="p-10">{children}</div>
 		</>
