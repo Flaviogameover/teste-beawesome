@@ -23,18 +23,31 @@ export const CreateMatrizModal = () => {
 	const [lines, setLines] = useState(0);
 	const isOpen = useCreateModal((state) => state.isOpen);
 	const onClose = useCreateModal((state) => state.onClose);
+	const triangle = useCreateModal((state) => state.triangle);
 	const [page, setPage] = useState(STEPS.INITIAL);
 	const [matriz, setMatriz] = useState<number[][]>([]);
 
-    useEffect(()=>{
-        if(lines > 10) setLines(10);
-        if(lines < 1) setLines(1);
-    },[page,lines])
+	useEffect(() => {
+		if (triangle) {
+			setLines(triangle.length);
+			setMatriz(triangle);
+			setPage(STEPS.MATRIZ);
+		}
+	}, [triangle]);
+
+	useEffect(() => {
+		if (lines > 10) setLines(10);
+		if (lines < 1) setLines(1);
+	}, [page, lines]);
+
+	const title = triangle ? 'Editar matriz' : 'Criar matriz';
+	const buttonTitle = triangle ? 'Atualizar' : 'Criar';
 
 	const handleClose = () => {
 		onClose();
 		setPage(STEPS.INITIAL);
 		setLines(0);
+		handleResetMatriz();
 	};
 
 	const generateMatrix = (n: number) => {
@@ -58,14 +71,18 @@ export const CreateMatrizModal = () => {
 		});
 	};
 
-    const handleCreate = () => {
-        //Todo: Criar funcao para adicionar no banco de dados apos filtragem
-    }
+	const handleCreate = () => {
+		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
+	};
+
+	const handleResetMatriz = () => {
+		setMatriz((prev) => prev.map((item) => item.map((i) => 0)));
+	};
 
 	const HEADER = () => {
 		switch (page) {
 			case 0:
-				return <DialogTitle>Criar Matriz</DialogTitle>;
+				return <DialogTitle>{title}</DialogTitle>;
 
 			case 1:
 				return (
@@ -75,11 +92,11 @@ export const CreateMatrizModal = () => {
 							size={25}
 							onClick={() => setPage(() => STEPS.INITIAL)}
 						/>
-						<DialogTitle>Criar Matriz</DialogTitle>
+						<DialogTitle>{title}</DialogTitle>
 					</div>
 				);
 			default:
-				return <DialogTitle>Criar Matriz</DialogTitle>;
+				return <DialogTitle>{title}</DialogTitle>;
 		}
 	};
 
@@ -114,6 +131,7 @@ export const CreateMatrizModal = () => {
 											className="border text-center border-muted-foreground w-14 h-14"
 											key={index}
 											type="number"
+											value={matriz?.[rowIndex]?.[index]}
 											onChange={(e) =>
 												handleAddInput(
 													rowIndex,
@@ -165,13 +183,21 @@ export const CreateMatrizModal = () => {
 				</DialogHeader>
 				{BODY()}
 				{page !== STEPS.INITIAL && (
-					<DialogFooter>
+					<DialogFooter className="flex justify-between items-center">
+						<Button
+							type="button"
+							variant={'outline'}
+							onClick={handleResetMatriz}
+							disabled={matriz.length === 0}
+						>
+							Limpar
+						</Button>
 						<Button
 							type="button"
 							onClick={handleCreate}
-                            disabled={matriz.length === 0}
+							disabled={matriz.length === 0}
 						>
-							Save changes
+							{buttonTitle}
 						</Button>
 					</DialogFooter>
 				)}

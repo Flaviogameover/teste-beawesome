@@ -1,10 +1,10 @@
-import { CreateMatrizModal } from '@/components/Modal/CreateMatrizModal';
 import { Button } from '@/components/ui/button';
+import { ModalProvider } from '@/providers/modalProvider';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<>
-			<CreateMatrizModal />
+			<ModalProvider />
 
 			<div className="p-2 px-10 flex justify-between items-center bg-muted-foreground">
 				<h1>Home</h1>
