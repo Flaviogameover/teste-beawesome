@@ -1,5 +1,5 @@
 'use client';
-import { handler } from '@/actions/matrix';
+import { handler } from '@/actions/matriz';
 import { Modal } from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,9 +11,10 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useAction } from '@/hooks/useAction';
-import { useCreateModal } from '@/hooks/useCreateModalStore';
+import { useModalStore } from '@/hooks/useModalStore';
 import { cn } from '@/lib/utils';
 import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -22,17 +23,19 @@ enum STEPS {
 	MATRIZ = 1,
 }
 
-export const CreateMatrizModal = () => {
+export const MatrizModal = () => {
 	const [lines, setLines] = useState(0);
-	const isOpen = useCreateModal((state) => state.isOpen);
-	const onClose = useCreateModal((state) => state.onClose);
-	const triangle = useCreateModal((state) => state.triangle);
+	const isOpen = useModalStore((state) => state.isOpen);
+	const onClose = useModalStore((state) => state.onClose);
+	const triangle = useModalStore((state) => state.triangle);
 	const [page, setPage] = useState(STEPS.INITIAL);
 	const [matriz, setMatriz] = useState<number[][]>([]);
+	const router = useRouter();
 	const { execute } = useAction(handler, {
 		onSuccess: (data, message) => {
-			console.log(data, message);
 			toast.success(message);
+			handleClose();
+			router.refresh();
 		},
 	});
 
@@ -59,7 +62,7 @@ export const CreateMatrizModal = () => {
 		handleResetMatriz();
 	};
 
-	const generateMatrix = (n: number) => {
+	const generateMatriz = (n: number) => {
 		return Array.from({ length: n }, (_, i) => i + 1);
 	};
 
@@ -70,7 +73,7 @@ export const CreateMatrizModal = () => {
 
 			// Preencher com arrays de tamanho fixo
 			if (!newInputs[row]) {
-				newInputs[row] = Array(generateMatrix(lines)[row]);
+				newInputs[row] = Array(generateMatriz(lines)[row]);
 			}
 
 			// Adicionar o valor à posição específica na linha
@@ -82,7 +85,7 @@ export const CreateMatrizModal = () => {
 
 	const handleCreate = () => {
 		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
-		execute({matriz});
+		execute({ matriz, lines });
 	};
 
 	const handleResetMatriz = () => {
@@ -130,12 +133,12 @@ export const CreateMatrizModal = () => {
 					</div>
 				);
 			case 1:
-				const sequence = generateMatrix(lines);
+				const sequence = generateMatriz(lines);
 				return (
 					<div className="flex flex-col justify-center items-center gap-5">
 						{sequence.map((numberOfInputs, rowIndex) => (
 							<div key={rowIndex} className="flex gap-5">
-								{generateMatrix(numberOfInputs).map(
+								{generateMatriz(numberOfInputs).map(
 									(pos, index) => (
 										<Input
 											className="border text-center border-muted-foreground w-14 h-14"

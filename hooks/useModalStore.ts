@@ -2,7 +2,7 @@ import { TMatriz } from '@/types';
 import { create } from 'zustand';
 
 
-type CreateModalStore = {
+type ModalState = {
 	isOpen: boolean;
 	triangle?: TMatriz;
 	id?: string;
@@ -10,7 +10,7 @@ type CreateModalStore = {
 	onClose: () => void;
 };
 
-export const useCreateModal = create<CreateModalStore>((set) => ({
+export const useModalStore = create<ModalState>((set) => ({
 	isOpen: false,
 	triangle: undefined,
 	id: undefined,

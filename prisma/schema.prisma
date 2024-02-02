@@ -9,3 +9,24 @@ datasource db {
     provider = "mongodb"
     url      = env("DATABASE_URL")
 }
+
+type TMatriz {
+    matriz Int[]
+}
+
+type Step {
+    time  String
+}
+
+model Matriz {
+    id        String    @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String
+    matriz    Json[]
+    lines     Int
+    steps     Step[]
+    timestamp String[]
+    path      Int[]
+    sum       Int
+    method    String
+    //createdat
+}

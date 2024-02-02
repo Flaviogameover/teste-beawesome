@@ -1,10 +1,23 @@
-'use client';
+import { prismadb } from '@/lib/prismadb';
 import { DashboardClient } from './_components/DashboardClient';
+import { auth } from '@clerk/nextjs';
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+
+
+	const {userId} = auth();
+
+	if(!userId) return null;
+
+	const matrizes = await prismadb.matriz.findMany({
+		where: {
+			userId
+		},
+	})
+
 
 	return (
-		<DashboardClient/>
+		<DashboardClient matrizes={matrizes}/>
 	);
 };
 

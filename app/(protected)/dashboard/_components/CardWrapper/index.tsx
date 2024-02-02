@@ -1,22 +1,23 @@
-import { sumTriangle } from '@/dummy';
+import { MatrizDB } from '@/types';
 import { CardSingle } from '../CardSingle';
-import { triangles } from '@/constants/triangles';
 
-export const CardWrapper = () => {
-	const triangle = sumTriangle(triangles[0]);
+interface CardWrapperProps {
+	matrizes: MatrizDB[];
+}
 
+export const CardWrapper = ({ matrizes }: CardWrapperProps) => {
 	return (
 		<div className="my-5 p-3 flex items-start gap-8 flex-wrap justify-evenly">
 			{/* {triangles.map((_, index) => (
 			<CardSingle key={index} triangle={triangles[index]} />
             trocar pelo real esquema do db
 		))} */}
-			{Array.from({ length: 10 }).map((_, index) => (
+			{matrizes.map((item) => (
 				<CardSingle
-					key={index}
-					triangle={triangle.arr}
-					path={triangle.path}
-					sum={triangle.sum}
+					key={item.id}
+					triangle={item.matriz}
+					path={item.path}
+					sum={item.sum}
 				/>
 			))}
 		</div>

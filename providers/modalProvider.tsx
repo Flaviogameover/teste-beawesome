@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateMatrizModal } from '@/components/Modal/CreateMatrizModal';
+import { MatrizModal } from '@/components/Modal/MatrizModal';
 import { useState, useEffect } from 'react';
 
 export const ModalProvider = () => {
@@ -14,7 +14,7 @@ export const ModalProvider = () => {
 
 	return (
 		<>
-			<CreateMatrizModal />
+			<MatrizModal />
 		</>
 	);
 };

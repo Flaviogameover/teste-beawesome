@@ -11,6 +11,19 @@ export type ErrorType = {
 export type ReturnType = SuccessType | ErrorType;
 export type TMatriz = number[][];
 
+export type MatrizDB = {
+	id: string;
+	lines: number;
+	matriz: TMatriz;
+	path: number[];
+	steps: {
+		time: string;
+	}[];
+	sum: number;
+	method: string;
+	userId: string;
+};
+
 /**
  *
  */

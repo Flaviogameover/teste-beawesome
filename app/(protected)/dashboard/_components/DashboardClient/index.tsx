@@ -1,12 +1,16 @@
 'use client';
 
 import { TitleHeader } from '@/components/TitleHeader';
+import { useModalStore } from '@/hooks/useModalStore';
 import { CardWrapper } from '../CardWrapper';
-import { useCreateModal } from '@/hooks/useCreateModalStore';
-import { CreateMatrizModal } from '@/components/Modal/CreateMatrizModal';
+import { MatrizDB } from '@/types';
 
-export const DashboardClient = () => {
-	const onOpenModal = useCreateModal((state) => state.onOpen);
+interface DashboardClientProps {
+	matrizes: MatrizDB[];
+}
+
+export const DashboardClient = ({ matrizes }: DashboardClientProps) => {
+	const onOpenModal = useModalStore((state) => state.onOpen);
 
 	return (
 		<>
@@ -16,7 +20,7 @@ export const DashboardClient = () => {
 					description="Gerencie suas matrizes"
 					action={onOpenModal}
 				/>
-				<CardWrapper />
+				<CardWrapper matrizes={matrizes}/>
 			</div>
 		</>
 	);

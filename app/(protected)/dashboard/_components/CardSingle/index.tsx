@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { CardItem } from '../CardItem';
 import { CartMatriz } from '../CartMatriz';
-import { useCreateModal } from '@/hooks/useCreateModalStore';
+import { useModalStore } from '@/hooks/useModalStore';
 
 export const CardSingle = ({
 	triangle,
@@ -13,7 +13,7 @@ export const CardSingle = ({
 	path: number[];
 	sum: number;
 }) => {
-	const createMatriz = useCreateModal();
+	const createMatriz = useModalStore();
 
 	return (
 		<Card className="w-[350px] border-muted-foreground/50">
