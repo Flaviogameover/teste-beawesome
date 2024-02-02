@@ -1,6 +1,6 @@
+import { TMatriz } from '@/types';
 import { create } from 'zustand';
 
-type TMatriz = number[][];
 
 type CreateModalStore = {
 	isOpen: boolean;

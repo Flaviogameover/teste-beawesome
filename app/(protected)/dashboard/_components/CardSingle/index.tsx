@@ -35,6 +35,7 @@ export const CardSingle = ({
 				</Button>
 				<Button
 					onClick={() => createMatriz.onOpen('', triangle)}
+					className='bg-muted-foreground border border-primary/90'
 				>
 					Editar
 				</Button>

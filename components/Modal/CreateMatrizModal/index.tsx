@@ -1,4 +1,5 @@
 'use client';
+import { handler } from '@/actions/matrix';
 import { Modal } from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,10 +10,12 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useAction } from '@/hooks/useAction';
 import { useCreateModal } from '@/hooks/useCreateModalStore';
 import { cn } from '@/lib/utils';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 enum STEPS {
 	INITIAL = 0,
@@ -26,6 +29,12 @@ export const CreateMatrizModal = () => {
 	const triangle = useCreateModal((state) => state.triangle);
 	const [page, setPage] = useState(STEPS.INITIAL);
 	const [matriz, setMatriz] = useState<number[][]>([]);
+	const { execute } = useAction(handler, {
+		onSuccess: (data, message) => {
+			console.log(data, message);
+			toast.success(message);
+		},
+	});
 
 	useEffect(() => {
 		if (triangle) {
@@ -73,6 +82,7 @@ export const CreateMatrizModal = () => {
 
 	const handleCreate = () => {
 		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
+		execute({matriz});
 	};
 
 	const handleResetMatriz = () => {
