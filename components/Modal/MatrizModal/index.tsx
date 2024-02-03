@@ -28,6 +28,7 @@ export const MatrizModal = () => {
 	const isOpen = useModalStore((state) => state.isOpen);
 	const onClose = useModalStore((state) => state.onClose);
 	const triangle = useModalStore((state) => state.triangle);
+	const id = useModalStore((state) => state.id);
 	const [page, setPage] = useState(STEPS.INITIAL);
 	const [matriz, setMatriz] = useState<number[][]>([]);
 	const router = useRouter();
@@ -86,13 +87,18 @@ export const MatrizModal = () => {
 		});
 	};
 
-	const handleCreate = () => {
+	const handleMatriz = () => {
 		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
 		let matrizCopy = matriz;
 		if (lines !== matriz.length) {
 			matrizCopy = matriz.slice(0, lines);
 		}
-		execute({ matriz: matrizCopy, lines });
+
+		if (id) {
+			execute({ matriz: matrizCopy, lines, id });
+		} else {
+			execute({ matriz: matrizCopy, lines });
+		}
 	};
 
 	const handleResetMatriz = () => {
@@ -215,7 +221,7 @@ export const MatrizModal = () => {
 						</Button>
 						<Button
 							type="button"
-							onClick={handleCreate}
+							onClick={handleMatriz}
 							disabled={isLoading || matriz.length === 0}
 						>
 							{buttonTitle}

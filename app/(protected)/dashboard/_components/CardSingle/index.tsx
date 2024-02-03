@@ -55,7 +55,7 @@ export const CardSingle = ({ triangle, path, sum, id }: CardSingleProps) => {
 				</Button>
 				<Button
 					disabled={isLoading}
-					onClick={() => createMatriz.onOpen('', triangle)}
+					onClick={() => createMatriz.onOpen(id, triangle)}
 					className="bg-muted-foreground border border-primary/90"
 				>
 					Editar

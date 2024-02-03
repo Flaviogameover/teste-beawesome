@@ -74,11 +74,13 @@ const formatMatriz = (values: TMatriz): TSumMatriz => {
 type HandlerProps = {
 	matriz: TMatriz;
 	lines: number;
+	id?: string;
 };
 
 export const handler = async ({
 	matriz,
 	lines,
+	id,
 }: HandlerProps): Promise<ReturnType> => {
 	try {
 		const { userId } = auth();
@@ -119,6 +121,28 @@ export const handler = async ({
 				error: 'Ocorreu um erro!',
 			};
 
+		if (id) {
+			const updatedMatriz = await prismadb.matriz.update({
+				where: {
+					id,
+					userId,
+				},
+				data: {
+					lines,
+					matriz,
+					path,
+					steps,
+					sum,
+					method,
+				},
+			});
+
+			return {
+				success: true,
+				message: 'Matriz atualizada!',
+				data: updatedMatriz,
+			};
+		}
 		const newMatriz = await prismadb.matriz.create({
 			data: {
 				lines,
