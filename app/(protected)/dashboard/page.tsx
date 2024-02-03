@@ -20,7 +20,9 @@ const DashboardPage = async () => {
 
 
 	return (
-		<DashboardClient matrizes={matrizes}/>
+		<div className="h-full">
+			<DashboardClient matrizes={matrizes}/>
+		</div>
 	);
 };
 

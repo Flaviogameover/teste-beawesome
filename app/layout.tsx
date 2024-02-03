@@ -18,12 +18,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<ClerkProvider>
-		<html lang="en">
-			<body className={mulish.className}>
-				<main>{children}</main>
-				<Toaster richColors />
-			</body>
-		</html>
+			<html lang="en">
+				<body className={mulish.className}>
+					<Toaster />
+					<main>{children}</main>
+			
+				</body>
+			</html>
 		</ClerkProvider>
 	);
 }

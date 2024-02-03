@@ -7,7 +7,7 @@ interface CardWrapperProps {
 
 export const CardWrapper = ({ matrizes }: CardWrapperProps) => {
 	return (
-		<div className="my-5 p-3 flex items-start gap-8 flex-wrap justify-evenly">
+		<div className="my-5 py-3 flex items-start gap-8 flex-wrap justify-evenly">
 			{matrizes.map((item) => (
 				<CardSingle
 					key={item.id}

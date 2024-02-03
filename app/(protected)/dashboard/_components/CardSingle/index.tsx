@@ -48,7 +48,7 @@ export const CardSingle = ({
 	};
 
 	return (
-		<Card className="w-[450px] border-muted-foreground/50">
+		<Card className="min-w-[350px] border-muted-foreground/50">
 			<CartMatriz triangle={triangle} path={path} />
 			<CardContent>
 				<div className="space-y-1 p-2 border-b border-muted-foreground">

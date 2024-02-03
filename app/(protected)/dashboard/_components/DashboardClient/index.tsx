@@ -14,15 +14,15 @@ export const DashboardClient = ({ matrizes }: DashboardClientProps) => {
 	if (!matrizes || matrizes.length < 1) {
 		return (
 			<>
-				<div>
-					<TitleHeader
-						label="Painel"
-						description="Gerencie suas matrizes"
-						action={onOpenModal}
-					/>
-					<div className="my-5 p-3 flex justify-center">
-						<h2 className='font-semibold text-lg'>- As matrizes criadas aparecerão aqui! -</h2>
-					</div>
+				<TitleHeader
+					label="Painel"
+					description="Gerencie suas matrizes"
+					action={onOpenModal}
+				/>
+				<div className="my-5 p-3 flex justify-center">
+					<h2 className="font-semibold text-lg">
+						- As matrizes criadas aparecerão aqui! -
+					</h2>
 				</div>
 			</>
 		);
@@ -30,14 +30,12 @@ export const DashboardClient = ({ matrizes }: DashboardClientProps) => {
 
 	return (
 		<>
-			<div>
 				<TitleHeader
 					label="Painel"
 					description="Gerencie suas matrizes"
 					action={onOpenModal}
 				/>
 				<CardWrapper matrizes={matrizes} />
-			</div>
 		</>
 	);
 };

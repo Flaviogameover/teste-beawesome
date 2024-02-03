@@ -51,11 +51,6 @@ export const MatrizModal = () => {
 		}
 	}, [triangle]);
 
-	useEffect(() => {
-		if (lines > 10) setLines(10);
-		if (lines < 1) setLines(1);
-	}, [page, lines]);
-
 	const title = triangle ? 'Editar matriz' : 'Criar matriz';
 	const buttonTitle = triangle ? 'Atualizar' : 'Criar';
 
@@ -129,25 +124,29 @@ export const MatrizModal = () => {
 		switch (page) {
 			case 0:
 				return (
-					<div className="border-b border-muted-foreground/50 pb-5 flex items-center gap-5">
-						<Input
-							type="number"
-							onChange={(e) => setLines(Number(e.target.value))}
-							value={lines}
-						/>
-						<Button
-							disabled={lines < 1}
-							type="button"
-							onClick={() => setPage(() => STEPS.MATRIZ)}
-						>
-							Adicionar linhas
-						</Button>
+					<div className="border-b border-muted-foreground/50 pb-5 flex flex-col gap-2">
+						<div className="flex items-center gap-5">
+							<Input
+								type="number"
+								onChange={(e) =>
+									setLines(Number(e.target.value))
+								}
+							/>
+							<Button
+								disabled={lines < 1 || lines > 10}
+								type="button"
+								onClick={() => setPage(() => STEPS.MATRIZ)}
+							>
+								Adicionar linhas
+							</Button>
+						</div>
+						<span className='text-xs font-semibold text-primary'>Apenas números entre 1 e 10</span>
 					</div>
 				);
 			case 1:
 				const sequence = generateMatriz(lines);
 				return (
-					<div className="flex flex-col justify-center items-center gap-5">
+					<div className="flex flex-col justify-center items-center gap-3">
 						{sequence.map((numberOfInputs, rowIndex) => (
 							<div key={rowIndex} className="flex gap-5">
 								{generateMatriz(numberOfInputs).map(
@@ -209,22 +208,24 @@ export const MatrizModal = () => {
 				</DialogHeader>
 				{BODY()}
 				{page !== STEPS.INITIAL && (
-					<DialogFooter className="flex justify-between items-center">
-						<Button
-							type="button"
-							variant={'outline'}
-							onClick={handleResetMatriz}
-							disabled={isLoading || matriz.length === 0}
-						>
-							Limpar
-						</Button>
-						<Button
-							type="button"
-							onClick={handleMatriz}
-							disabled={isLoading || matriz.length === 0}
-						>
-							{buttonTitle}
-						</Button>
+					<DialogFooter>
+						<div className="flex justify-between gap-5 items-center w-full">
+							<Button
+								type="button"
+								variant={'outline'}
+								onClick={handleResetMatriz}
+								disabled={isLoading || matriz.length === 0}
+							>
+								Limpar
+							</Button>
+							<Button
+								type="button"
+								onClick={handleMatriz}
+								disabled={isLoading || matriz.length === 0}
+							>
+								{buttonTitle}
+							</Button>
+						</div>
 					</DialogFooter>
 				)}
 			</DialogContent>
