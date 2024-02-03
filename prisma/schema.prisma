@@ -15,18 +15,19 @@ type TMatriz {
 }
 
 type Step {
-    time  String
+    time String
 }
 
 model Matriz {
-    id        String    @id @default(auto()) @map("_id") @db.ObjectId
-    userId    String
-    matriz    Json[]
-    lines     Int
-    steps     Step[]
-    timestamp String[]
-    path      Int[]
-    sum       Int
-    method    String
-    //createdat
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId     String
+    matriz     Json[]
+    lines      Int
+    steps      Step[]
+    timestamp  String
+    path       Int[]
+    sum        Int
+    method     String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
 }

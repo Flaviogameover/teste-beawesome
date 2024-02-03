@@ -22,6 +22,7 @@ export type MatrizDB = {
 	sum: number;
 	method: string;
 	userId: string;
+	timestamp: string;
 };
 
 /**

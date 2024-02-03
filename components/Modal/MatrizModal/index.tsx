@@ -88,7 +88,6 @@ export const MatrizModal = () => {
 	};
 
 	const handleMatriz = () => {
-		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
 		let matrizCopy = matriz;
 		if (lines !== matriz.length) {
 			matrizCopy = matriz.slice(0, lines);

@@ -100,7 +100,8 @@ export const handler = async ({
 			matriz = matriz.slice(0, lines);
 		}
 
-		const { path, steps, sum, method, success } = formatMatriz(matriz);
+		const { path, steps, sum, method, success, total } =
+			formatMatriz(matriz);
 
 		if (!success) {
 			return {
@@ -120,7 +121,11 @@ export const handler = async ({
 				success: false,
 				error: 'Ocorreu um erro!',
 			};
-
+		if (typeof total !== 'string' || method.length === 0)
+			return {
+				success: false,
+				error: 'Ocorreu um erro!',
+			};
 		if (id) {
 			const updatedMatriz = await prismadb.matriz.update({
 				where: {
@@ -149,6 +154,7 @@ export const handler = async ({
 				matriz,
 				path,
 				steps,
+				timestamp: total,
 				sum,
 				method,
 				userId,

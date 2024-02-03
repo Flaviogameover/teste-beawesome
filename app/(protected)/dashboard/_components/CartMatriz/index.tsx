@@ -23,7 +23,7 @@ export const CartMatriz = ({ triangle, path }: CardMatrizProps) => {
 			currentRow.forEach((item, index) => {
 				const cellElement = document.createElement('div');
 				cellElement.className =
-					'w-9 h-9 m-1 border rounded-md border-muted-foreground/50 text-muted-foreground flex flex-col justify-center items-center';
+					'w-9 h-9 p-3 m-1 border rounded-md border-muted-foreground/50 text-muted-foreground flex flex-col justify-center items-center';
 
 				if (index === path[i]) {
 					cellElement.classList.add(

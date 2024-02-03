@@ -15,9 +15,22 @@ interface CardSingleProps {
 	path: number[];
 	sum: number;
 	id: string;
+	method: string;
+	steps: {
+		time: string;
+	}[];
+	timestamp: string;
 }
 
-export const CardSingle = ({ triangle, path, sum, id }: CardSingleProps) => {
+export const CardSingle = ({
+	triangle,
+	path,
+	sum,
+	id,
+	method,
+	steps,
+	timestamp,
+}: CardSingleProps) => {
 	const createMatriz = useModalStore();
 	const router = useRouter();
 	const { execute, isLoading } = useAction(handler, {
@@ -35,14 +48,18 @@ export const CardSingle = ({ triangle, path, sum, id }: CardSingleProps) => {
 	};
 
 	return (
-		<Card className="w-[350px] border-muted-foreground/50">
+		<Card className="w-[450px] border-muted-foreground/50">
 			<CartMatriz triangle={triangle} path={path} />
 			<CardContent>
 				<div className="space-y-1 p-2 border-b border-muted-foreground">
 					<CardItem label="Soma" value={sum} />
 					<CardItem label="Tamanho (linhas)" value={path.length} />
-					<CardItem label="Tempo" value={'2s'} />
-					<CardItem label="Método" value={'Math.max'} />
+					<CardItem label="Tempo total" value={timestamp} />
+					<CardItem label="Método" value={method} />
+					<div className="pb-1 flex flex-col justify-between items-center font-semibold">
+						<span className="self-start">Steps</span>
+						<span>{steps.map(item=>`${item.time}s`).join(' - ')}</span>
+					</div>
 				</div>
 			</CardContent>
 			<CardFooter className="flex justify-between">
