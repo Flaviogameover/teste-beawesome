@@ -31,11 +31,14 @@ export const MatrizModal = () => {
 	const [page, setPage] = useState(STEPS.INITIAL);
 	const [matriz, setMatriz] = useState<number[][]>([]);
 	const router = useRouter();
-	const { execute } = useAction(handler, {
+	const { execute, isLoading } = useAction(handler, {
 		onSuccess: (data, message) => {
 			toast.success(message);
 			handleClose();
 			router.refresh();
+		},
+		onError: (error) => {
+			toast.error(error);
 		},
 	});
 
@@ -85,7 +88,11 @@ export const MatrizModal = () => {
 
 	const handleCreate = () => {
 		//Todo: Criar funcao para adicionar no banco de dados apos filtragem
-		execute({ matriz, lines });
+		let matrizCopy = matriz;
+		if (lines !== matriz.length) {
+			matrizCopy = matriz.slice(0, lines);
+		}
+		execute({ matriz: matrizCopy, lines });
 	};
 
 	const handleResetMatriz = () => {
@@ -143,6 +150,7 @@ export const MatrizModal = () => {
 										<Input
 											className="border text-center border-muted-foreground w-14 h-14"
 											key={index}
+											disabled={isLoading}
 											type="number"
 											value={matriz?.[rowIndex]?.[index]}
 											onChange={(e) =>
@@ -201,14 +209,14 @@ export const MatrizModal = () => {
 							type="button"
 							variant={'outline'}
 							onClick={handleResetMatriz}
-							disabled={matriz.length === 0}
+							disabled={isLoading || matriz.length === 0}
 						>
 							Limpar
 						</Button>
 						<Button
 							type="button"
 							onClick={handleCreate}
-							disabled={matriz.length === 0}
+							disabled={isLoading || matriz.length === 0}
 						>
 							{buttonTitle}
 						</Button>

@@ -1,7 +1,7 @@
 export type SuccessType = {
 	success: true;
 	message: string;
-	data: any;
+	data?: any;
 };
 
 export type ErrorType = {

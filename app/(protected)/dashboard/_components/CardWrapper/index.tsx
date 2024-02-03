@@ -15,6 +15,7 @@ export const CardWrapper = ({ matrizes }: CardWrapperProps) => {
 			{matrizes.map((item) => (
 				<CardSingle
 					key={item.id}
+					id={item.id}
 					triangle={item.matriz}
 					path={item.path}
 					sum={item.sum}

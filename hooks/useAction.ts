@@ -26,7 +26,6 @@ export const useAction = <TInput, TOutput>(
 				if (!req) return;
 
 				if (!req.success) {
-					toast.error(req.error);
 					setError(req.error);
 					options.onError?.(req.error);
 				}
