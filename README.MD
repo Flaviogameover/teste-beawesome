@@ -93,6 +93,14 @@ Para rodar os testes, rode o seguinte comando
 
 - [Live](https://teste-beawesome.vercel.app/)
 
+- Conta para teste -
+
+Email
+`jipinag608@evvgo.com`
+
+Senha
+`494150`
+
 ## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)
