@@ -9,6 +9,7 @@ export type ErrorType = {
 	error: string;
 };
 export type ReturnType = SuccessType | ErrorType;
+
 export type TMatriz = number[][];
 
 export type MatrizDB = {
@@ -24,7 +25,3 @@ export type MatrizDB = {
 	userId: string;
 	timestamp: string;
 };
-
-/**
- *
- */

@@ -10,6 +10,7 @@ type ModalState = {
 	onClose: () => void;
 };
 
+// Cria o template do zustand
 export const useModalStore = create<ModalState>((set) => ({
 	isOpen: false,
 	triangle: undefined,

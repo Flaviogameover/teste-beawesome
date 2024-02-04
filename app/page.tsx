@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 
 const Home = () => {
 	const { userId } = auth();
-
 	const url = userId ? '/dashboard' : '/sign-in';
 	return (
 		<div className="h-full">

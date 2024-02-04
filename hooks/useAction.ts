@@ -1,6 +1,5 @@
 import { ReturnType } from '@/types';
 import { useCallback, useState } from 'react';
-import { toast } from 'sonner';
 
 type ActionInput<TInput> = (input: TInput) => Promise<ReturnType>;
 
@@ -10,6 +9,14 @@ type ActionStatus<TOutput> = {
 	onComplete?: () => void;
 };
 
+
+// Essa função controla o crud da aplicação
+/**
+ * @param {TInput} param - Recebe o handler = função à ser executada com "use server" do NextJS
+ * @param {TOutput} param - Exporta funções para complementar a execução = onSuccess, onError, onComplete
+ * @description Após invocada, a função irá executar o TInput e retornar seus possíveis status
+ * @returns {object} - Retorna as ferramentas da função = execute, result, isLoading, error
+ */
 export const useAction = <TInput, TOutput>(
 	action: ActionInput<TInput>,
 	options: ActionStatus<TOutput> = {}

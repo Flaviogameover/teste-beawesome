@@ -4,6 +4,11 @@ import { prismadb } from '@/lib/prismadb';
 import { ReturnType } from '@/types';
 import { auth } from '@clerk/nextjs';
 
+/**
+ * @param {string} param.id - Recebe o id do item
+ * @description Após invocada, a função irá filtrar os dados para deletar o item pelo id
+ * @returns {Promise<ReturnType>} - Retorna a resposta da ação
+ */
 export const handler = async ({ id }: { id: string }): Promise<ReturnType> => {
 	try {
 		const { userId } = auth();

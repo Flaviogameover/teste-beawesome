@@ -4,6 +4,12 @@ import { auth } from '@clerk/nextjs';
 import { ReturnType, TMatriz } from '@/types';
 import { prismadb } from '@/lib/prismadb';
 
+/**
+ * @param {TMatriz} param - Recebe uma matriz
+ * @description Após invocada, checa se o array é valido
+ * @returns {boolean} - Retorna um bool
+ */
+
 const checkMatriz = (matriz: TMatriz): boolean => {
 	if (matriz[0].length !== 1) return false;
 	return Array.isArray(matriz) && Array.isArray(matriz[0]);
@@ -21,6 +27,12 @@ type TSumMatriz = {
 	total?: string;
 	success: boolean;
 };
+
+/**
+ * @param {TMatriz} param - Recebe uma matriz
+ * @description Após invocada, a função irá filtrar os dados e retornar um array bidimensional
+ * @returns {TSumMatriz} - Retorna os objetos para inserção no bd: sum, path, steps, method, total, success
+ */
 
 const formatMatriz = (values: TMatriz): TSumMatriz => {
 	let sum: number = 0;
@@ -77,6 +89,11 @@ type HandlerProps = {
 	id?: string;
 };
 
+/**
+ * @param {HandlerProps} params - Recebe a matriz, a quantidade de linhas e possívelmente um id se for uma atualização
+ * @description Após invocada, a função irá filtrar os dados para e criar/atualizar a matriz
+ * @returns {Promise<ReturnType>} - Retorna a resposta da ação
+ */
 export const handler = async ({
 	matriz,
 	lines,

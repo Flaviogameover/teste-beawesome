@@ -10,6 +10,7 @@ interface CardMatrizProps {
 export const CartMatriz = ({ triangle, path }: CardMatrizProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
+		// Cria o triangulo visual
 		const container = containerRef.current;
 		if (!container || !triangle) return;
 		let currentIndex = 0;

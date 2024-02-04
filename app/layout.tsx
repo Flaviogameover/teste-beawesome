@@ -8,7 +8,7 @@ const mulish = Mulish({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'Teste lógico',
-	description: '-To be added-',
+	description: 'App para calcular soma de matrizes bidimensionais pelo maior de cada linha, sendo vizinho da útlima posição',
 };
 
 export default function RootLayout({
@@ -22,7 +22,6 @@ export default function RootLayout({
 				<body className={mulish.className}>
 					<Toaster />
 					<main>{children}</main>
-			
 				</body>
 			</html>
 		</ClerkProvider>

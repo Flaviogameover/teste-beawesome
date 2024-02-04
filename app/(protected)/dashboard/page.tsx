@@ -3,8 +3,6 @@ import { DashboardClient } from './_components/DashboardClient';
 import { auth } from '@clerk/nextjs';
 
 const DashboardPage = async () => {
-
-
 	const {userId} = auth();
 
 	if(!userId) return null;
@@ -17,7 +15,6 @@ const DashboardPage = async () => {
 			created_at: "desc"
 		}
 	})
-
 
 	return (
 		<div className="h-full">

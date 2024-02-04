@@ -19,4 +19,3 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default MainLayout;
-//App para calcular soma de matrizes triangulares pelo maior de cada linha, sendo vizinho da útlima posição
