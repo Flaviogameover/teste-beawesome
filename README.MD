@@ -13,7 +13,7 @@ Um projeto fullstack para calcular soma de matrizes bidimensionais pelo maior de
 
 **Full-stack** NextJS 14
 
-## Screenshots
+## Screenshot
 
 ![App Screenshot](https://raw.githubusercontent.com/Flaviogameover/teste-beawesome/main/public/print.png)
 
