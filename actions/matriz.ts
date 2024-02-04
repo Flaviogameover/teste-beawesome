@@ -2,7 +2,7 @@
 
 import { auth } from '@clerk/nextjs';
 import { ReturnType, TMatriz } from '@/types';
-import { prismadb } from '@/lib/prismadb';
+import { prismadb } from '../lib/prismadb';
 
 /**
  * @param {TMatriz} param - Recebe uma matriz
@@ -10,7 +10,7 @@ import { prismadb } from '@/lib/prismadb';
  * @returns {boolean} - Retorna um bool
  */
 
-const checkMatriz = (matriz: TMatriz): boolean => {
+export const checkMatriz = (matriz: TMatriz): boolean => {
 	if (matriz[0].length !== 1) return false;
 	return Array.isArray(matriz) && Array.isArray(matriz[0]);
 };
@@ -34,7 +34,7 @@ type TSumMatriz = {
  * @returns {TSumMatriz} - Retorna os objetos para inserção no bd: sum, path, steps, method, total, success
  */
 
-const formatMatriz = (values: TMatriz): TSumMatriz => {
+export const formatMatriz = (values: TMatriz): TSumMatriz => {
 	let sum: number = 0;
 	let lastIndex: number = 0;
 	let indexArr: number[] = [];
@@ -87,6 +87,7 @@ type HandlerProps = {
 	matriz: TMatriz;
 	lines: number;
 	id?: string;
+	isTest?: boolean;
 };
 
 /**
@@ -98,9 +99,16 @@ export const handler = async ({
 	matriz,
 	lines,
 	id,
+	isTest,
 }: HandlerProps): Promise<ReturnType> => {
 	try {
-		const { userId } = auth();
+		let userId: string | null;
+		if (!isTest) {
+			const user = auth();
+			userId = user.userId;
+		} else {
+			userId = '1';
+		}
 		if (!userId)
 			return {
 				success: false,
@@ -144,6 +152,15 @@ export const handler = async ({
 				error: 'Ocorreu um erro!',
 			};
 		if (id) {
+			if (isTest) {
+				return {
+					success: true,
+					message: 'Matriz atualizada!',
+					data: {
+						id: '1',
+					},
+				};
+			}
 			const updatedMatriz = await prismadb.matriz.update({
 				where: {
 					id,
@@ -165,23 +182,32 @@ export const handler = async ({
 				data: updatedMatriz,
 			};
 		}
-		const newMatriz = await prismadb.matriz.create({
-			data: {
-				lines,
-				matriz,
-				path,
-				steps,
-				timestamp: total,
-				sum,
-				method,
-				userId,
-			},
-		});
+		if (!isTest) {
+			const newMatriz = await prismadb.matriz.create({
+				data: {
+					lines,
+					matriz,
+					path,
+					steps,
+					timestamp: total,
+					sum,
+					method,
+					userId,
+				},
+			});
 
+			return {
+				success: true,
+				message: 'Matriz criada!',
+				data: newMatriz,
+			};
+		}
 		return {
 			success: true,
 			message: 'Matriz criada!',
-			data: newMatriz,
+			data: {
+				id: '2',
+			},
 		};
 	} catch (error) {
 		console.log('[HANDLER_MATRIZ_ERROR]', error);

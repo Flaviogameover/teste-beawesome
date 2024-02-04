@@ -89,6 +89,10 @@ Para rodar os testes, rode o seguinte comando
 
 - [@Flaviogameover](https://www.github.com/flaviogameover)
 
+## Live 
+
+- [Live](https://teste-beawesome.vercel.app/)
+
 ## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)

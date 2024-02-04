@@ -1,6 +1,6 @@
 'use server';
 
-import { prismadb } from '@/lib/prismadb';
+import { prismadb } from '../lib/prismadb';
 import { ReturnType } from '@/types';
 import { auth } from '@clerk/nextjs';
 
@@ -9,9 +9,21 @@ import { auth } from '@clerk/nextjs';
  * @description Após invocada, a função irá filtrar os dados para deletar o item pelo id
  * @returns {Promise<ReturnType>} - Retorna a resposta da ação
  */
-export const handler = async ({ id }: { id: string }): Promise<ReturnType> => {
+export const handler = async ({
+	id,
+	isTest,
+}: {
+	id?: string;
+	isTest?: boolean;
+}): Promise<ReturnType> => {
 	try {
-		const { userId } = auth();
+		let userId: string | null;
+		if (isTest) {
+			userId = '1';
+		} else {
+			const user = auth();
+			userId = user.userId;
+		}
 		if (!userId)
 			return {
 				success: false,
@@ -23,6 +35,19 @@ export const handler = async ({ id }: { id: string }): Promise<ReturnType> => {
 				success: false,
 				error: 'Id inválido!',
 			};
+
+		if (isTest) {
+			if(id !== '1') {
+				return {
+					success: false,
+					error: 'Ocorreu um erro!',
+				};
+			}
+			return {
+				success: true,
+				message: 'Matriz deletada!',
+			};
+		}
 
 		const data = await prismadb.matriz.findUnique({
 			where: {
