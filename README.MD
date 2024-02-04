@@ -93,7 +93,7 @@ Para rodar os testes, rode o seguinte comando
 
 - [Live](https://teste-beawesome.vercel.app/)
 
-- Conta para teste -
+- Conta para teste
 
 Email
 `jipinag608@evvgo.com`
