@@ -5,13 +5,13 @@ Um projeto fullstack para calcular soma de matrizes bidimensionais pelo maior de
 
 ## Stack utilizada
 
-**Language** TypeScript
+**Language:** TypeScript
 
 **Front-end:** Zustand, TailwindCSS, Shadcn-ui, Sonner
 
 **Back-end:**  Clerk, Prisma
 
-**Full-stack** NextJS 14
+**Full-stack:** NextJS 14
 
 ## Screenshot
 
